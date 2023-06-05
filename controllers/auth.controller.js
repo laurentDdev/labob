@@ -14,6 +14,7 @@ const authController = {
         }catch (e) {
             console.log(e)
             if (e.name === "SequelizeUniqueConstraintError") {
+                console.log("test")
                 return res.status(401).json({ message: 'Email already used'})
             }
             res.sendStatus(401)
