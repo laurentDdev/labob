@@ -8,9 +8,11 @@ const routes = require('./routes/index')
 const app = express()
 
 
+app.use(express.json())
 app.use('/api',routes)
 
 db.sequelize.authenticate().then(() => {
+    db.sequelize.sync({ force: true })
     console.log('Database connection established')
 
     app.listen(process.env.PORT,() => {
