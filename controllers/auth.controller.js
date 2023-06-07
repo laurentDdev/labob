@@ -15,7 +15,7 @@ const authController = {
             console.log(e)
             if (e.name === "SequelizeUniqueConstraintError") {
                 console.log("test")
-                return res.status(401).json({ message: 'Email already used'})
+                return res.status(401).json({ message: 'Email deja utilisé'})
             }
             res.sendStatus(401)
         }
@@ -57,6 +57,16 @@ const authController = {
                     res.status(401).json({message: 'An error has been detected'})
                     break
             }
+        }
+    },
+    autologin: async (req,res) => {
+        try {
+            const token = req.headers.authorization && req.headers.authorization.split(" ")[1]
+            const user = await authService.findUserByToken(token)
+            res.status(200).json({user: user})
+        }catch (e) {
+            console.log(e)
+            res.sendStatus(401)
         }
     }
 }

@@ -21,6 +21,15 @@ module.exports = (sequelize) => {
         password: {
             type: DataTypes.STRING(300),
             allowNull: false
+        },
+        bio: {
+            type: DataTypes.STRING(300),
+            allowNull: true
+        },
+        avatar: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+            defaultValue: 'anonymous'
         }
     })
 }

@@ -1,5 +1,7 @@
 const db = require("../models/index")
+const UserDTO = require('../DTO/user.dto')
 const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken");
 const authService = {
     create: async (email, pseudo, password) => {
 
@@ -11,6 +13,20 @@ const authService = {
             email: user.email,
             pseudo: user.pseudo
         }
+    },
+    findUserByToken: async (token) => {
+        return jwt.verify(token,process.env.JWT_SECRET, (err,payload) => {
+            const { id } = payload
+            return authService.findUserById(id)
+        })
+    },
+    findUserById: async (id) => {
+        const user = await db.User.findOne({where: {id: id}})
+
+        if (user) {
+            return new UserDTO(user.id, user.email, user.pseudo, user.bio, user.avatar)
+        }
+        return null
     },
     login: async (email, password) => {
 
@@ -30,11 +46,7 @@ const authService = {
             }
         }
 
-        return {
-            id: user.id,
-            email: user.email,
-            pseudo: user.pseudo
-        }
+        return new UserDTO(user.id, user.email, user.pseudo, user.bio, user.avatar)
 
     }
 }
