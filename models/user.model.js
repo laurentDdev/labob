@@ -23,6 +23,7 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         bio: {
+
             type: DataTypes.STRING(300),
             allowNull: true
         },

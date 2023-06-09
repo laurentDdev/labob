@@ -39,8 +39,7 @@ const authController = {
                 const token = await jwt.sign(payload, process.env.JWT_SECRET, options)
 
                 res.setHeader('Authorization', `Bearer ${token}`)
-                console.log("test")
-                res.sendStatus(200)
+                res.status(200).json({user:user})
             }
 
         }catch (e) {
@@ -63,7 +62,12 @@ const authController = {
         try {
             const token = req.headers.authorization && req.headers.authorization.split(" ")[1]
             const user = await authService.findUserByToken(token)
-            res.status(200).json({user: user})
+            if (user) {
+                res.status(200).json({user: user})
+
+            }else {
+                res.sendStatus(401)
+            }
         }catch (e) {
             console.log(e)
             res.sendStatus(401)
