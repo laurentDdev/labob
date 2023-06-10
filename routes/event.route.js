@@ -8,5 +8,6 @@ const storage = require('../utils/multer.config')('event')
 const upload = multer({storage: storage})
 
 eventRoute.post('/create', jwtMiddleware, upload.single('eventimage'), eventController.create)
+eventRoute.get('/all', jwtMiddleware,eventController.getAll)
 
 module.exports = eventRoute
