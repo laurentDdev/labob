@@ -1,6 +1,7 @@
 
-const { Sequelize } = require('sequelize')
+const { Sequelize, DataTypes} = require('sequelize')
 const userModel = require('./user.model')
+const eventModel = require('./event.model')
 
 const { DB_NAME, DB_HOST, DB_USER, DB_PASSWORD} = process.env
 let sequelize;
@@ -21,5 +22,9 @@ db.sequelize = sequelize
 
 db.User = userModel(db.sequelize)
 
+db.Event = eventModel(db.sequelize)
+
+db.User.hasMany(db.Event)
+db.Event.belongsTo(db.User)
 
 module.exports = db

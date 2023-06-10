@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 
 const authController = {
     register: async (req, res) => {
+        console.log('pl')
         try {
             const { email, password, pseudo } = req.body
             const user = await authService.create(email,pseudo,password)
