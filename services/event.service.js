@@ -29,9 +29,14 @@ const eventService = {
 
     },
     update: async (id, name, desc, user) => {
-        const event = await db.Event.findOne({where: {id}})
 
-        if (Number(event.author_id) !== Number(user.id)) throw new Error('Invalide author')
+        const event = await db.Event.findOne({where: {id: id}})
+
+        console.log(event.UserId)
+        console.log("---------")
+        console.log(user.id)
+
+        if (Number(event.UserId) !== Number(user.id)) throw new Error('Invalide author')
 
         const updatedEvent = await db.Event.update({name, desc}, {where: {id}})
 
