@@ -16,6 +16,27 @@ const eventService = {
         if (events) {
             return events.map(event => new EventDto(event.id,event.name,event.desc,event.type,event.image,event.startEvent,event.endEvent,event.repeatEvent,event.nbPlace,event.UserId))
         }
+    },
+    delete: async (id, author_id, user_id) => {
+        if (Number(author_id) !== Number(user_id)) {
+            throw new Error('Invalide author')
+        }
+
+        await db.Event.destroy({where: {id: id}})
+
+
+        return id
+
+    },
+    update: async (id, name, desc, user) => {
+        const event = await db.Event.findOne({where: {id}})
+
+        if (Number(event.author_id) !== Number(user.id)) throw new Error('Invalide author')
+
+        const updatedEvent = await db.Event.update({name, desc}, {where: {id}})
+
+        return updatedEvent
+
     }
 }
 

@@ -9,5 +9,7 @@ const upload = multer({storage: storage})
 
 eventRoute.post('/create', jwtMiddleware, upload.single('eventimage'), eventController.create)
 eventRoute.get('/all', jwtMiddleware,eventController.getAll)
+eventRoute.delete('/:id/:author_id',jwtMiddleware, eventController.delete)
+eventRoute.patch('/:id', jwtMiddleware, eventController.update)
 
 module.exports = eventRoute
