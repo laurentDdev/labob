@@ -68,6 +68,20 @@ const eventController = {
             console.log(e)
             res.sendStatus(401)
         }
+    },
+    getMyEvent: async (req, res) => {
+        try {
+
+            const token = req.headers.authorization.split(" ")[1]
+            const user = await authService.findUserByToken(token)
+            const events = await eventService.getMyEvent(user)
+            if (events) {
+                res.status(200).json({events})
+            }
+        }catch (e) {
+            console.log(e)
+            res.sendStatus(401)
+        }
     }
 }
 

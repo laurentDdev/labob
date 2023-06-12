@@ -42,6 +42,11 @@ const eventService = {
 
         return updatedEvent
 
+    },
+    getMyEvent: async (user) => {
+        const events = await user.getEvents();
+
+        console.log(events)
     }
 }
 

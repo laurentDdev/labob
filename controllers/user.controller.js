@@ -1,7 +1,17 @@
+const userService = require('../services/user.service')
+
 const userController = {
 
-    getProfile: (req, res) => {
-
+    findAll: async (req, res) => {
+        try {
+            const users = await userService.findAll()
+            if (users) {
+                res.status(200).json({users})
+            }
+        }catch (e) {
+            console.log(e)
+            res.sendStatus(401)
+        }
     }
 
 }

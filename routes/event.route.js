@@ -11,5 +11,6 @@ eventRoute.post('/create', jwtMiddleware, upload.single('eventimage'), eventCont
 eventRoute.get('/all', jwtMiddleware,eventController.getAll)
 eventRoute.delete('/:id/:author_id',jwtMiddleware, eventController.delete)
 eventRoute.patch('/:id', jwtMiddleware, eventController.update)
+eventRoute.get('/my', jwtMiddleware, eventController.getMyEvent)
 
 module.exports = eventRoute
