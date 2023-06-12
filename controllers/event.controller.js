@@ -1,5 +1,7 @@
 const eventService = require('../services/event.service')
 const authService = require('../services/auth.service')
+const jwt = require('jsonwebtoken')
+const db = require('../models/index')
 const eventController = {
     create:async (req, res) => {
         try {
@@ -55,7 +57,9 @@ const eventController = {
             const { name, desc } = req.body
             const token = req.headers.authorization.split(' ')[1]
 
-            const user = await authService.findUserByToken(token)
+            const { id: _id } = await jwt.verify(token, process.env.JWT_SECRET)
+
+            const user = await db.User.findOne({where: {id: _id}})
 
             const updatedEvent = await eventService.update(id, name, desc, user)
 
@@ -73,7 +77,7 @@ const eventController = {
         try {
 
             const token = req.headers.authorization.split(" ")[1]
-            const user = await authService.findUserByToken(token)
+
             const events = await eventService.getMyEvent(user)
             if (events) {
                 res.status(200).json({events})
