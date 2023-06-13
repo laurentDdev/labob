@@ -12,5 +12,6 @@ eventRoute.get('/all', jwtMiddleware,eventController.getAll)
 eventRoute.delete('/:id/:author_id',jwtMiddleware, eventController.delete)
 eventRoute.patch('/:id', jwtMiddleware, eventController.update)
 eventRoute.get('/my', jwtMiddleware, eventController.getMyEvent)
+eventRoute.post('/:id/track',jwtMiddleware, eventController.track)
 
 module.exports = eventRoute

@@ -47,6 +47,13 @@ const eventService = {
         const events = await user.getEvents();
 
         console.log(events)
+    },
+    track: async (eventId, userId) => {
+        const event = await db.Event.findOne({where: {id: eventId}})
+        const user = await db.User.findOne({where: {id: userId}})
+        await event.addUser(user)
+
+        return {eventId, userId}
     }
 }
 

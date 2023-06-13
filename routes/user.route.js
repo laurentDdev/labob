@@ -10,4 +10,5 @@ const upload = multer({storage: storage})
 userRoute.get('/all', jwtMiddleware, userController.findAll)
 userRoute.patch('/:id/profile', jwtMiddleware, upload.single('newprofileimage'),userController.update)
 
+
 module.exports = userRoute

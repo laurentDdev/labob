@@ -90,6 +90,18 @@ const eventController = {
             console.log(e)
             res.sendStatus(401)
         }
+    },
+    track: async (req, res) => {
+        try {
+            const {id: eventId} = req.params
+            const token = req.headers['authorization'].split(' ')[1]
+            const {id: userId} = await jwt.verify(token, process.env.JWT_SECRET)
+            const eventTrack = await eventService.track(eventId, userId)
+            res.status(200).json(eventTrack)
+        }catch (e) {
+            console.log(e)
+            res.status(401)
+        }
     }
 }
 
