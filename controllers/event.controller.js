@@ -78,6 +78,10 @@ const eventController = {
 
             const token = req.headers.authorization.split(" ")[1]
 
+            const { id } = jwt.verify(token, process.env.JWT_SECRET)
+
+            const user = await db.User.findOne({where: {id: id}})
+
             const events = await eventService.getMyEvent(user)
             if (events) {
                 res.status(200).json({events})
