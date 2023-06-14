@@ -54,6 +54,19 @@ const eventService = {
         await event.addUser(user)
 
         return {eventId, userId}
+    },
+    getTrackedEvent: async (id) => {
+        const user = await db.User.findByPk(id, {
+            include: [{
+                model: db.Event,
+                through: {
+                    attributes: []
+                }
+            }]
+        })
+
+        const events = user.Events
+        return events
     }
 }
 
